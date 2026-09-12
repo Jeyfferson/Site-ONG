@@ -4,83 +4,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/style.css">
 
-    <title>ONG FLORECER</title>
+    <title>ONG FLORECER - Transformando Vidas e Construindo Futuros</title>
 </head>
 
 <body>
-
+    <!-- Cabeçalho Principal -->
     <header>
+        <img src="../img/florecerTransparente.png" alt="Logo ONG FLORECER">
         <nav>
-            <a href="index.html">FLORECER</a>
-
-            <ul>
-                <li>
-                    <a href="index.html">Home</a>
-                </li>
-
-                <li>
-                    <a href="../Site de ong/pages/cadastro.html">Cadastro</a>
-                </li>
-
-                <li>
-                    <a href="redes-sociais.html">Redes Sociais</a>
-                </li>
+            <a href="index.html" class="brand-title">FLORECER</a>
+            <ul>              
+                <li><a href="pages/cadastro.html">Cadastro</a></li>
+                <li><a href="pages/projetos.html">Projetos</a></li>
+                <li><a href="pages/redes-sociais.html">Redes Sociais</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-
-        <section>
+        <!-- Seção Hero: O primeiro impacto visual e emocional -->
+        <section class="hero">
             <header>
-                <h1>FLORECER</h1>
-
-                <p>
-                    Por uma infância brilhante
+                <h1>Transformando a infância, florescendo o futuro.</h1>
+                <p class="subtitle">
+                    Oferecemos educação, esporte e nutrição para crianças e adolescentes em situação de vulnerabilidade social.
                 </p>
             </header>
 
-            <p>
-                Somos uma organização dedicada a ajudar crianças
-                e adolescentes em situação de vulnerabilidade.
-            </p>
+            <div class="cta-box">
+                <a href="pages/cadastro.html" class="btn-primary">
+                    Seja um Voluntário e Mude Vidas
+                </a>
+            </div>
+        </section>
 
-            <a href="../Site de ong/pages/cadastro.html">
-                Faça parte dessa equipe
+        <!-- Seção Quem Somos: Foco na missão -->
+        <section class="sobre-nos">
+            <h2>Nossa Missão</h2>
+            <p>
+                A <strong>ONG FLORECER</strong> acredita que toda criança merece a oportunidade de sonhar e crescer em um ambiente seguro. Atuamos diretamente em comunidades vulneráveis, oferecendo o suporte necessário para que jovens desenvolvam todo o seu potencial através de projetos educacionais, culturais e esportivos.
+            </p>
+        </section>
+
+        <!-- Seção O Que Fazemos: Mostra os pilares de atuação -->
+        <section class="pilares">
+            <h2>Como Transformamos a Realidade</h2>
+            <p>Descubra como você pode fazer parte dessa corrente do bem:</p>
+
+            <div class="pilares-links">
+                <article class="pilar-card">
+                    <h3>Projetos Sociais</h3>
+                    <p>Conheça nossas oficinas de leitura, escolinhas de esporte e programas de reforço nutricional.</p>
+                    <a href="pages/projetos.html">Ver Projetos</a>
+                </article>
+
+                <article class="pilar-card">
+                    <h3>Seja um Voluntário</h3>
+                    <p>Doe seu tempo, talento ou recursos para apoiar nossas atividades diárias.</p>
+                    <a href="pages/cadastro.html">Quero Me Cadastrar</a>
+                </article>
+            </div>
+        </section>
+
+        <!-- Seção Chamada Final para Ação -->
+        <section class="contato-chamada">
+            <h2>Junte-se à Nossa Causa</h2>
+            <p>
+                Pequenas atitudes geram grandes transformações. Seja apoiando um de nossos projetos ou dedicando algumas horas da sua semana, sua ajuda é fundamental para mantermos esse trabalho vivo.
+            </p>
+            <a href="pages/cadastro.html" class="btn-secondary">
+                Faça Seu Cadastro de Apoio
             </a>
         </section>
-
-
-        <section>
-            <h2>Sobre a FLORECER</h2>
-
-            <p>
-                Nosso objetivo é contribuir para o desenvolvimento,
-                educação e bem-estar de crianças e adolescentes,
-                criando oportunidades para um futuro melhor.
-            </p>
-        </section>
-
-
-        <section>
-            <h2>Como podemos ajudar?</h2>
-
-            <ul>
-                <li><a href="../Site de ong/pages/educa.html">Educação</a></li>
-                <li><a href="../Site de ong/pages/cadastro.html">Cadastro</a></li>
-                
-            </ul>
-        </section>
-
     </main>
 
+    <!-- Rodapé -->
     <footer>
         <p>
             &copy; 2026 ONG FLORECER. Todos os direitos reservados.
         </p>
     </footer>
 
+    <!-- Scripts -->
+    <script src="../js/script.js"></script>
 </body>
 
 </html>

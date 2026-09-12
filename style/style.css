@@ -1,0 +1,44 @@
+/* 1. Estilização do Header (Container principal) */
+header {
+    display: flex;                  /* Coloca a imagem e o nav lado a lado */
+    align-items: center;            /* Alinha verticalmente ao centro */
+    justify-content: space-between; /* Espaça a logo à esquerda e o menu à direita */
+    padding: 10px 5%;              /* Espaçamento interno (topo/baixo e laterais) */
+    background-color: #fff;         /* Cor de fundo do cabeçalho */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra suave para dar acabamento */
+}
+
+/* 2. Estilização e Redimensionamento da Logo */
+header img {
+    height: 50px;                   /* Define uma altura fixa para a logo */
+    width: auto;                    /* Mantém a proporção da imagem sem distorcer */
+    object-fit: contain;            /* Garante o ajuste perfeito */
+}
+
+/* 3. Ajustes no Menu de Navegação */
+header nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;                     /* Espaço entre o título/link da ONG e a lista */
+}
+
+/* Estilização da lista de links */
+header nav ul {
+    display: flex;                  /* Coloca os itens do menu em linha */
+    list-style: none;               /* Remove as bolinhas da lista */
+    margin: 0;
+    padding: 0;
+    gap: 15px;                      /* Espaçamento entre cada item do menu */
+}
+
+/* Estilização dos links */
+header nav a {
+    text-decoration: none;          /* Remove o sublinhado padrão dos links */
+    color: #333;                    /* Cor do texto */
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+header nav a:hover {
+    color: #f1c40f;                 /* Cor ao passar o mouse (ex: amarelo da sua marca) */
+}
