@@ -10,19 +10,42 @@
 </head>
 
 <body>
-    <!-- Cabeçalho Principal -->
-    <header>
-        <img src="img/florecerTransparente.png" alt="logo com uma cor de fundo amarelo vivo, e o nome da ong">
-        <nav>
-            <a href="index.html">FLORECER</a>
+    <!-- Cabeçalho Principal com Menu Hambúrguer e Dropdown -->
+    <header class="main-header">
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="img/florecerTransparente.png" alt="Logo ONG FLORECER">
+            </a>
+        </div>
 
+        <!-- Botão Hambúrguer para Mobile -->
+        <button class="hamburger-btn" aria-label="Abrir Menu de Navegação" aria-expanded="false" aria-controls="primary-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- Navegação Principal -->
+        <nav class="nav-menu" id="primary-menu">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="pages/cadastro.html">Cadastro</a></li>
-                <li><a href="pages/projetos.html">Projetos</a></li>
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                
+                <!-- Item com Submenu Dropdown -->
+                <li class="dropdown">
+                    <a href="pages/projetos.html" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                        Projetos <span class="arrow">▾</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="pages/projetos.html#leitura">Futuro na Leitura</a></li>
+                        <li><a href="pages/projetos.html#esportes">Esporte & Cidadania</a></li>
+                        <li><a href="pages/projetos.html#nutricao">Nutrir com Amor</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="pages/cadastro.html" class="nav-link">Cadastro</a></li>
             </ul>
         </nav>
-    </header>
+    </header>    
 
     <main>
         <!-- Seção Hero: O primeiro impacto visual e emocional -->
@@ -89,7 +112,7 @@
     </footer>
 
     <!-- Scripts -->
-    <!--<script src="js/script.js"></script>-->
+    <script src="js/script.js"></script>
 </body>
 
 </html>

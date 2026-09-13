@@ -11,19 +11,43 @@
 
 <body>
 
-    <!-- Cabeçalho Principal -->
-    <header>
-        <img src="../img/florecerTransparente.png" alt="Logo da ONG FLORECER">
+<!-- Cabeçalho Principal com Menu Hambúrguer e Dropdown -->
+    <header class="main-header">
+        <div class="logo-container">
+            <a href="../index.html">
+                <img src="../img/florecerTransparente.png" alt="Logo ONG FLORECER">
+            </a>
+        </div>
 
-        <nav>
-            <a href="../index.html" class="brand-title">FLORECER</a>
+        <!-- Botão Hambúrguer para Mobile -->
+        <button class="hamburger-btn" aria-label="Abrir Menu de Navegação" aria-expanded="false" aria-controls="primary-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
 
+        <!-- Navegação Principal -->
+        <nav class="nav-menu" id="primary-menu">
             <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="projetos.html">Projetos</a></li>               
+                <li><a href="../index.html" class="nav-link active">Home</a></li>
+                
+                <!-- Item com Submenu Dropdown -->
+                <li class="dropdown">
+                    <a href="pages/projetos.html" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                        Projetos <span class="arrow">▾</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="pages/projetos.html#leitura">Futuro na Leitura</a></li>
+                        <li><a href="pages/projetos.html#esportes">Esporte & Cidadania</a></li>
+                        <li><a href="pages/projetos.html#nutricao">Nutrir com Amor</a></li>
+                    </ul>
+                </li>
+
+               
             </ul>
         </nav>
-    </header>
+    </header>    
+    
 
     <!-- Conteúdo Principal -->
     <main>

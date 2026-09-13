@@ -12,19 +12,32 @@
 
 <body>
 
-    <header>
-        <!-- Usa ../ para pegar as imagens da raiz -->
-        <img src="../img/florecerTransparente.png" alt="Logo ONG FLORECER">
-        <nav>
-            <a href="../index.html" class="brand-title">FLORECER</a>
+    
+<!-- Cabeçalho Principal com Menu Hambúrguer e Dropdown -->
+    <header class="main-header">
+        <div class="logo-container">
+            <a href="../index.html">
+                <img src="../img/florecerTransparente.png" alt="Logo ONG FLORECER">
+            </a>
+        </div>
 
+        <!-- Botão Hambúrguer para Mobile -->
+        <button class="hamburger-btn" aria-label="Abrir Menu de Navegação" aria-expanded="false" aria-controls="primary-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- Navegação Principal -->
+        <nav class="nav-menu" id="primary-menu">
             <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="cadastro.html">Cadastro</a></li>
-                <li><a href="redes-sociais.html">Redes Sociais</a></li>
+                <li><a href="../index.html" class="nav-link active">Home</a></li>
+                
+                
+                <li><a href="cadastro.html" class="nav-link">Cadastro</a></li>
             </ul>
         </nav>
-    </header>
+    </header>    
 
     <main>
         <section class="hero-page">
@@ -43,7 +56,7 @@
                 
                 <!-- Projeto 1 -->
                 <article class="card-projeto">
-                    <img src="../img/leiturinha.png" alt="Crianças lendo livros">
+                    <img src="/img/leiturinha.png" alt="Crianças lendo livros">
                     <div class="card-conteudo">
                         <h3>Futuro na Leitura</h3>
                         <p>Incentivamos a alfabetização e a literatura oferecendo livros, cantinhos de leitura e contação de histórias para crianças carentes.</p>
@@ -52,7 +65,7 @@
 
                 <!-- Projeto 2 -->
                 <article class="card-projeto">
-                    <img src="../img/esportes.jpg" alt="Crianças praticando esportes em uma quadra">
+                    <img src="/img/esportes.jpg" alt="Crianças praticando esportes em uma quadra">
                     <div class="card-conteudo">
                         <h3>Esporte & Cidadania</h3>
                         <p>Aulas de futebol, arte marcial e atletismo no contra-turno escolar para promover a saúde, o trabalho em equipe e a disciplina.</p>
@@ -61,7 +74,7 @@
 
                 <!-- Projeto 3 -->
                 <article class="card-projeto">
-                    <img src="../img/alimentacao.png" alt="Prato com refeição saudável e equilibrada">
+                    <img src="/img/alimentacao.png" alt="Prato com refeição saudável e equilibrada">
                     <div class="card-conteudo">
                         <h3>Nutrir com Amor</h3>
                         <p>Garantimos refeições diárias equilibradas para reforçar o desenvolvimento físico e cognitivo de crianças em risco nutricional.</p>
@@ -85,7 +98,7 @@
         <p>&copy; 2026 ONG FLORECER. Todos os direitos reservados.</p>
     </footer>
 
-    <script src="../js/script.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 
 </html>

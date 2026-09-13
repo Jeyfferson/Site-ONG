@@ -1,21 +1,21 @@
 /* ==========================================================================
-   1. SISTEMA DE DESIGN & VARIÁVEIS CUSTOMIZADAS (DESIGN SYSTEM)
+   1. SISTEMA DE DESIGN & VARIÁVEIS CUSTOMIZADAS
    ========================================================================== */
 :root {
     /* Paleta de Cores */
     --color-primary: #f1c40f;          /* Amarelo ONG Florecer */
-    --color-primary-hover: #d69e2e;    /* Amarelo Dark */
+    --color-primary-hover: #d69e2e;
     --color-secondary: #2c3e50;        /* Azul Escuro / Texto Principal */
     --color-secondary-hover: #1a252f;
-    --color-bg-body: #f8f9fa;          /* Fundo da página */
-    --color-bg-card: #ffffff;          /* Fundo dos cards e seções */
+    --color-bg-body: #f8f9fa;          
+    --color-bg-card: #ffffff;          
     --color-text-dark: #1a202c;
     --color-text-muted: #64748b;
     --color-border: #e2e8f0;
 
     /* Escala Tipográfica (Escalável via rem) */
     --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    --font-size-base: 1rem;            /* 16px por padrão */
+    --font-size-base: 1rem;            /* 16px */
     --font-size-sm: 0.875rem;          /* 14px */
     --font-size-lg: 1.25rem;           /* 20px */
     --font-size-xl: 1.75rem;           /* 28px */
@@ -32,7 +32,7 @@
     --radius-sm: 6px;
     --radius-md: 12px;
     --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.15);
 
     /* Grid System */
     --grid-gap: var(--space-sm);
@@ -48,7 +48,7 @@
 }
 
 html {
-    font-size: 100%; /* Garante a acessibilidade mantendo a preferência do usuário */
+    font-size: 100%;
     scroll-behavior: smooth;
 }
 
@@ -67,11 +67,9 @@ img {
 }
 
 /* ==========================================================================
-   3. FLEXBOX: COMPONENTES DE INTERFACE & ALINHAMENTOS MICROS
+   3. CABEÇALHO & ESTRUTURA DE EMPILHAMENTO (Z-INDEX CORRIGIDO)
    ========================================================================== */
-
-/* Header & Nav com Flexbox */
-header {
+header, .main-header {
     background-color: var(--color-bg-card);
     padding: var(--space-sm) var(--space-md);
     display: flex;
@@ -79,9 +77,10 @@ header {
     align-items: center;
     justify-content: space-between;
     box-shadow: var(--shadow-sm);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    
+    /* Chave para a solução do z-index: */
+    position: relative;
+    z-index: 9999 !important; /* Coloca o header acima de tudo na página */
 }
 
 header img {
@@ -89,30 +88,167 @@ header img {
     width: auto;
 }
 
-header nav {
+/* Menu Hambúrguer (Botão) */
+.hamburger-btn {
     display: flex;
-    align-items: center;
-    gap: var(--space-sm);
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10000;
 }
 
-header nav ul {
-    display: flex;
+.hamburger-btn .bar {
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-secondary);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Animação do Ícone Hambúrguer -> X */
+.hamburger-btn.active .bar:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+.hamburger-btn.active .bar:nth-child(2) {
+    opacity: 0;
+}
+.hamburger-btn.active .bar:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+/* ==========================================================================
+   4. NAVEGAÇÃO E DROPDOWN (CORRIGIDO)
+   ========================================================================== */
+.dropdown {
+    position: relative;
+}
+
+/* Escondido por padrão em todas as telas */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--color-bg-card);
+    min-width: 200px;
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-sm);
+    padding: var(--space-xs) 0;
     list-style: none;
-    gap: var(--space-sm);
+    z-index: 10001;
 }
 
-header nav a {
+.dropdown-menu a {
+    display: block;
+    padding: var(--space-xs) var(--space-sm);
+    color: var(--color-text-dark);
+    font-size: var(--font-size-sm);
     text-decoration: none;
-    color: var(--color-secondary);
-    font-weight: 600;
-    transition: color 0.2s ease;
 }
 
-header nav a:hover {
+.dropdown-menu a:hover,
+.dropdown-menu a:focus {
+    background-color: var(--color-bg-body);
     color: var(--color-primary-hover);
 }
 
-/* Botões de Ação (CTAs) */
+/* --- REGRAS DO MENU MOBILE (ABAIXO DE 768px) --- */
+@media screen and (max-width: 767px) {
+    .nav-menu {
+        display: none; /* Escondido por padrão */
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--color-bg-card);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        z-index: 9999 !important;
+        border-bottom: 3px solid var(--color-primary);
+    }
+
+    .nav-menu.active {
+        display: block !important;
+    }
+
+    .nav-menu ul {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        padding: var(--space-sm) var(--space-md);
+        gap: var(--space-sm);
+    }
+
+    .nav-menu a {
+        display: block;
+        padding: 8px 0;
+        text-decoration: none;
+        color: var(--color-secondary);
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    /* Submenu no mobile: Escondido por padrão, abre APENAS com a classe .show via JS */
+    .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        padding-left: var(--space-sm);
+        background-color: var(--color-bg-body);
+        margin-top: 5px;
+        display: none; 
+    }
+
+    .dropdown-menu.show {
+        display: block !important;
+    }
+}
+
+/* --- REGRAS PARA DESKTOP (768px OU MAIS) --- */
+@media screen and (min-width: 768px) {
+    .hamburger-btn {
+        display: none;
+    }
+
+    .nav-menu {
+        display: flex !important;
+        position: static;
+        box-shadow: none;
+        background: transparent;
+        border: none;
+    }
+
+    .nav-menu ul {
+        display: flex;
+        flex-direction: row;
+        list-style: none;
+        gap: var(--space-md);
+    }
+
+    .nav-menu a {
+        text-decoration: none;
+        color: var(--color-secondary);
+        font-weight: 600;
+        transition: color 0.2s ease;
+    }
+
+    .nav-menu a:hover {
+        color: var(--color-primary-hover);
+    }
+
+    /* No Desktop, o dropdown só abre no passar do mouse (hover) ou foco do teclado */
+    .dropdown:hover > .dropdown-menu,
+    .dropdown:focus-within > .dropdown-menu {
+        display: block;
+    }
+}
+
+/* ==========================================================================
+   5. BOTÕES DE AÇÃO (CTAs)
+   ========================================================================== */
 .btn-primary, .btn-secondary {
     display: flex;
     align-items: center;
@@ -147,7 +283,86 @@ header nav a:hover {
     transform: translateY(-2px);
 }
 
-/* Formulário de Cadastro com Flexbox */
+/* ==========================================================================
+   6. SISTEMA MACRO DE LAYOUT & CARDS (GRID DE 12 COLUNAS)
+   ========================================================================== */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-md) var(--space-sm);
+    position: relative;
+    z-index: 1; /* Garante que todo o conteúdo fique em camada inferior ao menu */
+}
+
+.grid-container, 
+.pilares-links,
+.projetos-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--grid-gap);
+}
+
+section {
+    background-color: var(--color-bg-card);
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    z-index: 1;
+}
+
+/* Seção Hero */
+.hero, .hero-page {
+    background: linear-gradient(135deg, #ffffff 0%, #fffde7 100%);
+    border-left: 5px solid var(--color-primary);
+}
+
+.hero h1, .hero-page h1 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-xs);
+}
+
+.subtitle {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-sm);
+}
+
+.hero, .sobre-nos, .pilares, .contato-chamada, .sobre, .form-section, .projetos-container {
+    grid-column: span 12;
+}
+
+.pilar-card, .card-projeto {
+    grid-column: span 12;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    overflow: hidden;
+}
+
+.card-projeto:hover,
+.card-projeto:focus-within {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary);
+}
+
+.card-projeto img {
+    transition: transform 0.5s ease;
+}
+
+.card-projeto:hover img {
+    transform: scale(1.03);
+}
+
+/* ==========================================================================
+   7. FORMULÁRIOS & PSEUDO-CLASSES DE VALIDAÇÃO
+   ========================================================================== */
 form fieldset {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
@@ -170,102 +385,96 @@ form input {
     font-size: var(--font-size-base);
 }
 
+form input:focus,
+form select:focus,
+form textarea:focus {
+    outline: 2px solid var(--color-primary);
+    border-color: transparent;
+    box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.2);
+}
+
+form input:not(:placeholder-shown):valid {
+    border-color: #27ae60;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%2327ae60" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+form input:not(:placeholder-shown):invalid {
+    border-color: #e74c3c;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23e74c3c" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
 /* ==========================================================================
-   4. SISTEMA MACRO DE LAYOUT: GRID DE 12 COLUNAS & BREAKPOINTS ESTREITOS
+   8. MODAL & ALERTAS
    ========================================================================== */
-
-/* Container Principal */
-main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: var(--space-md) var(--space-sm);
-}
-
-/* Estrutura Macro em Grid 12 Colunas (Mobile First: 1 coluna por padrão) */
-.grid-container, 
-.pilares-links,
-.projetos-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: var(--grid-gap);
-}
-
-/* Seções Padrão */
-section {
-    background-color: var(--color-bg-card);
-    padding: var(--space-md);
-    margin-bottom: var(--space-md);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-}
-
-/* Seção Hero */
-.hero, .hero-page {
-    background: linear-gradient(135deg, #ffffff 0%, #fffde7 100%);
-    border-left: 5px solid var(--color-primary);
-}
-
-.hero h1, .hero-page h1 {
-    font-size: var(--font-size-xl);
-    margin-bottom: var(--space-xs);
-}
-
-.subtitle {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-base);
-    margin-bottom: var(--space-sm);
-}
-
-/* Ocupação das Colunas no Grid (Por Padrão no Mobile = 12 colunas / Largura total) */
-.hero, .sobre-nos, .pilares, .contato-chamada, .sobre, .form-section, .projetos-container {
-    grid-column: span 12;
-}
-
-.pilar-card, .card-projeto {
-    grid-column: span 12;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    padding: var(--space-md);
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 100000;
 }
 
-/* Rodapé */
-footer {
-    text-align: center;
-    padding: var(--space-md);
-    background-color: var(--color-secondary);
-    color: #ffffff;
-    font-size: var(--font-size-sm);
-    margin-top: var(--space-xl);
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-content {
+    background: var(--color-bg-card);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    max-width: 500px;
+    width: 90%;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--color-text-muted);
 }
 
 /* ==========================================================================
-   5. BREAKPOINTS ESTREITOS (MEDIA QUERIES)
+   9. MEDIA QUERIES PARA GRID RESPONSIVO
    ========================================================================== */
-
-/* --- BREAKPOINT 1: TABLET (min-width: 768px) --- */
 @media screen and (min-width: 768px) {
     :root {
         --grid-gap: var(--space-md);
-    }
-
-    header nav ul {
-        gap: var(--space-md);
     }
 
     .btn-primary, .btn-secondary {
         width: auto;
     }
 
-    /* Cards ocupam 6 colunas cada no Tablet (lado a lado, 2 por linha) */
     .pilar-card, .card-projeto {
         grid-column: span 6;
     }
 }
 
-/* --- BREAKPOINT 2: DESKTOP (min-width: 1024px) --- */
 @media screen and (min-width: 1024px) {
     .hero h1 {
         font-size: var(--font-size-xxl);
@@ -275,12 +484,10 @@ footer {
         font-size: var(--font-size-lg);
     }
 
-    /* Na tela de projetos em Desktop, os 3 cards ocupam 4 colunas cada (12/3 = 4) */
     .projetos-grid .card-projeto {
         grid-column: span 4;
     }
 
-    /* Ajustes na Hero para divisão 7 colunas (Texto) e 5 colunas (Ação) */
     .hero header {
         grid-column: span 7;
     }
@@ -291,4 +498,16 @@ footer {
         align-items: center;
         justify-content: flex-end;
     }
+}
+
+/* Rodapé */
+footer {
+    text-align: center;
+    padding: var(--space-md);
+    background-color: var(--color-secondary);
+    color: #ffffff;
+    font-size: var(--font-size-sm);
+    margin-top: var(--space-xl);
+    position: relative;
+    z-index: 1;
 }
