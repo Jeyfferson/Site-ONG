@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (hamburgerBtn && navMenu) {
         hamburgerBtn.addEventListener('click', () => {
             const isExpanded = hamburgerBtn.getAttribute('aria-expanded') === 'true';
-            
             hamburgerBtn.setAttribute('aria-expanded', !isExpanded);
             hamburgerBtn.classList.toggle('active');
             navMenu.classList.toggle('active');
@@ -32,30 +31,201 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ==========================================================================
-       3. INTERCEPTAÇÃO DE FORMULÁRIO E ALERTA MODAL
+       3. MÁSCARAS DE FORMATAÇÃO EM TEMPO REAL (CPF E TELEFONE)
        ========================================================================== */
-    const cadastroForm = document.querySelector('form');
 
-    if (cadastroForm) {
-        cadastroForm.addEventListener('submit', (e) => {
-            e.preventDefault(); // Evita a recarga da página
+    // Formata CPF: 000.000.000-00 (remove caracteres não numéricos e evita duplicações)
+    function formatarCPF(valor) {
+        const apenasNumeros = valor.replace(/\D/g, '').slice(0, 11);
+        return apenasNumeros
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    }
 
-            // Abre o modal de sucesso se o formulário for válido
+    // Formata Telefone/WhatsApp: (00) 00000-0000 ou (00) 0000-0000
+    function formatarTelefone(valor) {
+        const apenasNumeros = valor.replace(/\D/g, '').slice(0, 11);
+        if (apenasNumeros.length <= 10) {
+            return apenasNumeros
+                .replace(/(\d{2})(\d)/, '($1) $2')
+                .replace(/(\d{4})(\d)/, '$1-$2');
+        }
+        return apenasNumeros
+            .replace(/(\d{2})(\d)/, '($1) $2')
+            .replace(/(\d{5})(\d)/, '$1-$2');
+    }
+
+    // Aplica as máscaras nos inputs correspondentes enquanto o usuário digita
+    const cpfInput = document.getElementById('cpf');
+    if (cpfInput) {
+        cpfInput.addEventListener('input', (e) => {
+            e.target.value = formatarCPF(e.target.value);
+        });
+    }
+
+    const telefoneInput = document.getElementById('telefone');
+    if (telefoneInput) {
+        telefoneInput.addEventListener('input', (e) => {
+            e.target.value = formatarTelefone(e.target.value);
+        });
+    }
+
+    /* ==========================================================================
+       4. SISTEMA DE VALIDAÇÃO E REGRAS DOS CAMPOS
+       ========================================================================== */
+    const form = document.getElementById('cadastroForm') || document.querySelector('form');
+
+    if (form) {
+        // Mapeamento das regras lógicas de cada campo
+        const campos = {
+            nome: {
+                input: document.getElementById('nome'),
+                error: document.getElementById('error-nome'),
+                validar: (valor) => {
+                    const textoLimpo = valor.trim();
+                    if (!textoLimpo) return 'O nome completo é obrigatório.';
+                    if (/[0-9]/.test(textoLimpo)) return 'O nome não deve conter números.';
+                    if (/[^a-zA-Zà-úÀ-Ú\s']/.test(textoLimpo)) return 'O nome não deve conter caracteres especiais.';
+                    if (textoLimpo.split(/\s+/).length < 2) return 'Digite seu nome e sobrenome.';
+                    return '';
+                }
+            },
+            cpf: {
+                input: document.getElementById('cpf'),
+                error: document.getElementById('error-cpf'),
+                validar: (valor) => {
+                    const numerosApenas = valor.replace(/\D/g, '');
+                    if (!numerosApenas) return 'O CPF é obrigatório.';
+                    if (numerosApenas.length !== 11) return 'O CPF deve conter exatamente 11 dígitos.';
+                    // Validação de dígitos repetidos (ex: 111.111.111-11)
+                    if (/^(\d)\1{10}$/.test(numerosApenas)) return 'Digite um CPF válido.';
+                    return '';
+                }
+            },
+            email: {
+                input: document.getElementById('email'),
+                error: document.getElementById('error-email'),
+                validar: (valor) => {
+                    const textoLimpo = valor.trim();
+                    if (!textoLimpo) return 'O e-mail é obrigatório.';
+                    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!regexEmail.test(textoLimpo)) return 'Digite um e-mail válido (ex: nome@dominio.com).';
+                    return '';
+                }
+            },
+            telefone: {
+                input: document.getElementById('telefone'),
+                error: document.getElementById('error-telefone'),
+                validar: (valor) => {
+                    const numerosApenas = valor.replace(/\D/g, '');
+                    if (!numerosApenas) return 'O telefone / WhatsApp é obrigatório.';
+                    if (numerosApenas.length < 10 || numerosApenas.length > 11) {
+                        return 'O telefone deve conter o DDD + 8 ou 9 dígitos.';
+                    }
+                    return '';
+                }
+            },
+            // Validações para campos adicionais caso existam no seu formulário:
+            mensagem: {
+                input: document.getElementById('mensagem'),
+                error: document.getElementById('error-mensagem'),
+                validar: (valor) => {
+                    if (valor && valor.trim().length > 0 && valor.trim().length < 10) {
+                        return 'A mensagem deve ter pelo menos 10 caracteres.';
+                    }
+                    return '';
+                }
+            },
+            termos: {
+                input: document.getElementById('termos'),
+                error: document.getElementById('error-termos'),
+                validar: (input) => {
+                    if (input && input.type === 'checkbox' && !input.checked) {
+                        return 'Você precisa aceitar os termos para continuar.';
+                    }
+                    return '';
+                }
+            }
+        };
+
+        // Função de validação individual por campo
+        function validarCampo(campoKey) {
+            const campo = campos[campoKey];
+            if (!campo || !campo.input || !campo.error) return true;
+
+            // Para checkboxes passa o elemento input, para os demais passa o valor string
+            const valorOuElemento = campo.input.type === 'checkbox' ? campo.input : campo.input.value;
+            const mensagemErro = campo.validar(valorOuElemento);
+
+            if (mensagemErro !== '') {
+                campo.error.textContent = mensagemErro;
+                campo.error.classList.add('active');
+                campo.input.classList.add('input-error');
+                return false; // Retorna Inválido
+            } else {
+                campo.error.textContent = '';
+                campo.error.classList.remove('active');
+                campo.input.classList.remove('input-error');
+                return true; // Retorna Válido
+            }
+        }
+
+        // Validação em tempo real (nos eventos 'input', 'blur' e 'change')
+        Object.keys(campos).forEach(key => {
+            const campo = campos[key];
+            if (campo.input) {
+                const eventoTipo = campo.input.type === 'checkbox' ? 'change' : 'input';
+                campo.input.addEventListener(eventoTipo, () => validarCampo(key));
+                campo.input.addEventListener('blur', () => validarCampo(key));
+            }
+        });
+
+        /* ==========================================================================
+           5. INTERCEPTAÇÃO RIGOROSA DO SUBMIT
+           ========================================================================== */
+        form.addEventListener('submit', (e) => {
+            e.preventDefault(); // Impede recarga da página e envio padrão
+
+            let formValido = true;
+
+            // Valida obrigatoriamente todos os campos no momento do clique
+            Object.keys(campos).forEach(key => {
+                const ehValido = validarCampo(key);
+                if (!ehValido) {
+                    formValido = false;
+                }
+            });
+
+            // Se houver qualquer erro, cancela e foca no primeiro campo com falha
+            if (!formValido) {
+                const primeiroErro = document.querySelector('.input-error');
+                if (primeiroErro) {
+                    primeiroErro.focus();
+                }
+                return; // Interrompe e NÃO abre o modal!
+            }
+
+            // SE ESTIVER 100% CORRETO: Dispara o modal de confirmação
             openModal(
                 'Cadastro Realizado com Sucesso!',
                 'Obrigado por se voluntariar para a ONG FLORECER. Entraremos em contato em breve através do seu WhatsApp.'
             );
 
-            cadastroForm.reset();
+            // Reseta o formulário e remove os estilos de erro/sucesso
+            form.reset();
+            Object.keys(campos).forEach(key => {
+                if (campos[key].error) campos[key].error.classList.remove('active');
+                if (campos[key].input) campos[key].input.classList.remove('input-error');
+            });
         });
     }
 });
 
 /* ==========================================================================
-   4. SISTEMA DINÂMICO DE MODAL
+   6. SISTEMA DINÂMICO DE MODAL
    ========================================================================== */
 function openModal(title, message) {
-    // Cria a estrutura do modal dinamicamente caso não exista
     let modalOverlay = document.querySelector('.modal-overlay');
 
     if (!modalOverlay) {
@@ -71,7 +241,6 @@ function openModal(title, message) {
         `;
         document.body.appendChild(modalOverlay);
 
-        // Eventos de Fechamento
         const closeBtn = modalOverlay.querySelector('.modal-close');
         const okBtn = modalOverlay.querySelector('.modal-ok-btn');
 
@@ -84,7 +253,6 @@ function openModal(title, message) {
         });
     }
 
-    // Alimenta o conteúdo e abre
     modalOverlay.querySelector('.modal-title').textContent = title;
     modalOverlay.querySelector('.modal-text').textContent = message;
     modalOverlay.classList.add('active');
