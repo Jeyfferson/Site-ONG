@@ -43,6 +43,13 @@ Projeto web desenvolvido como atividade acadêmica para a **ONG FLORECER**, foca
 
 ---
 
+## 📝 Relatório de Conformidade e Acessibilidade (WCAG 2.1 AA)
+
+- **Landmarks Semânticos:** Implementação integral de `<header>`, `<nav>`, `<main>`, `<section>`, `<article>` e `<footer>`.
+- **Navegação por Teclado:** Inclusão de *Skip Link* para salto direto ao conteúdo principal (`#main-content`) e indicadores `:focus-visible` de alto contraste em todos os elementos interativos.
+- **Leitores de Ecrã:** Atributos `aria-label`, `aria-expanded` e `aria-current="page"` aplicados nos controlos de menu e hiperligações do sistema.
+- **Otimização:** Ativo em ambiente de produção com carregamento contínuo via GitHub.
+
 ## 📁 Estrutura de Pastas do Projeto
 
 ```text
