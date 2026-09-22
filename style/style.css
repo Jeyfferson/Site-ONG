@@ -121,6 +121,46 @@ header img {
     transform: translateY(-9px) rotate(-45deg);
 }
 
+/* Skip Link para Navegação Teclado (WCAG 2.4.1) */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 10px;
+    background: #000000;
+    color: #ffffff;
+    padding: 12px 20px;
+    z-index: 9999;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 0 0 4px 4px;
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+    top: 0;
+    outline: 3px solid #ffbf00;
+}
+
+/* Foco Visível para Navegação por Teclado (WCAG 2.4.7 - Nível AA) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #0056b3;
+    outline-offset: 3px;
+}
+
+/* Redução de Movimento (WCAG 2.3.3) para utilizadores com sensibilidade motora/vestibular */
+@media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
 /* Atalho de acessibilidade (Skip Link) */
 .skip-link {
     position: absolute;
