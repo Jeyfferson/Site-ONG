@@ -10,11 +10,14 @@
 </head>
 
 <body>
+    <!-- Skip Link para Navegação por Teclado (WCAG 2.4.1) -->
+    <a href="#main-content" class="skip-link">Ir para o conteúdo principal</a>
+
     <!-- Cabeçalho Principal com Menu Hambúrguer e Dropdown -->
     <header class="main-header">
         <div class="logo-container">
-            <a href="index.html">
-                <img src="img/florecerTransparente.png" alt="Logo ONG FLORECER">
+            <a href="index.html" aria-label="Página inicial da ONG Florecer">
+                <img src="img/florecerTransparente.png" alt="Logótipo ONG FLORECER">
             </a>
         </div>
 
@@ -26,19 +29,19 @@
         </button>
 
         <!-- Navegação Principal -->
-        <nav class="nav-menu" id="primary-menu">
+        <nav class="nav-menu" id="primary-menu" aria-label="Navegação Principal">
             <ul>
-                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="index.html" class="nav-link active" aria-current="page">Home</a></li>
                 
                 <!-- Item com Submenu Dropdown -->
                 <li class="dropdown">
                     <a href="pages/projetos.html" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-                        Projetos <span class="arrow">▾</span>
+                        Projetos <span class="arrow" aria-hidden="true">▾</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="pages/projetos.html#leitura">Futuro na Leitura</a></li>
-                        <li><a href="pages/projetos.html#esportes">Esporte & Cidadania</a></li>
-                        <li><a href="pages/projetos.html#nutricao">Nutrir com Amor</a></li>
+                        <li><a href="pages/projetos.html">Futuro na Leitura</a></li>
+                        <li><a href="pages/projetos.html">Esporte & Cidadania</a></li>
+                        <li><a href="pages/projetos.html">Nutrir com Amor</a></li>
                     </ul>
                 </li>
 
@@ -47,7 +50,8 @@
         </nav>
     </header>    
 
-    <main>
+    <!-- Conteúdo Principal identificado com ID -->
+    <main id="main-content" tabindex="-1">
         <!-- Seção Hero: O primeiro impacto visual e emocional -->
         <section class="hero">
             <header>
@@ -58,7 +62,7 @@
             </header>
 
             <div class="cta-box">
-                <a href="pages/cadastro.html" class="btn-primary">
+                <a href="pages/cadastro.html" class="btn-primary" aria-label="Cadastre-se para ser um voluntário e mudar vidas">
                     Seja um Voluntário e Mude Vidas
                 </a>
             </div>
@@ -81,13 +85,13 @@
                 <article class="pilar-card">
                     <h3>Projetos Sociais</h3>
                     <p>Conheça nossas oficinas de leitura, escolinhas de esporte e programas de reforço nutricional.</p>
-                    <a href="pages/projetos.html">Ver Projetos</a>
+                    <a href="pages/projetos.html" aria-label="Ver detalhes dos projetos sociais da ONG Florecer">Ver Projetos</a>
                 </article>
 
                 <article class="pilar-card">
                     <h3>Seja um Voluntário</h3>
                     <p>Doe seu tempo, talento ou recursos para apoiar nossas atividades diárias.</p>
-                    <a href="pages/cadastro.html">Quero Me Cadastrar</a>
+                    <a href="pages/cadastro.html" aria-label="Quero me cadastrar como voluntário na ONG Florecer">Quero Me Cadastrar</a>
                 </article>
             </div>
         </section>
@@ -98,7 +102,7 @@
             <p>
                 Pequenas atitudes geram grandes transformações. Seja apoiando um de nossos projetos ou dedicando algumas horas da sua semana, sua ajuda é fundamental para mantermos esse trabalho vivo.
             </p>
-            <a href="pages/cadastro.html" class="btn-secondary">
+            <a href="pages/cadastro.html" class="btn-secondary" aria-label="Faça seu cadastro de apoio para ajudar a ONG Florecer">
                 Faça Seu Cadastro de Apoio
             </a>
         </section>
